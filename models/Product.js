@@ -50,10 +50,13 @@ class Product {
   }
 
   static async deleteByName(name) {
+    const Cart = require('./Cart');
     const db = getDatabase();
 
     try {
       await db.collection(COLLECTION_NAME).deleteOne({ name });
+      await Cart.deleteProductByName(name);
+      
     } catch (error) {
       console.error("Error occurred while deleting product");
     }
